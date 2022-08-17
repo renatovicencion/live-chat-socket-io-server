@@ -10,7 +10,7 @@ const { Server } = require("socket.io");
 
 const io = new Server(server, {
     cors: {
-        origin: "https://live-chat-socket-io-client.vercel.app/",
+        origin: "https://live-chat-socket-io-client.vercel.app",
         methods: ["GET", "POST"]
     }
 });
