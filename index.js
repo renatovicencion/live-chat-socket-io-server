@@ -1,9 +1,34 @@
-import app, { use } from "./src/app";
-import { createServer } from "http";
-const server = createServer(app);
-import cors from "cors";
+const app = require("./src/app");
+const http = require("http");
+const server = http.createServer(app);
+const cors = require("cors");
 
-use(cors());
+app.use(cors());
+
+const { Server } = require("socket.io");
+
+const io = new Server(server, {
+    cors: {
+        origin: "https://live-chat-socket-io-client.vercel.app/",
+        methods: ["GET", "POST"]
+    }
+});
+
+io.on("connection", (socket) => {
+    // console.log(`User Connected: ${socket.id}`);
+    socket.on("join_room", (data) => {
+        socket.join(data);
+        console.log(`User with ID: ${socket.id} joined room: ${data}`)
+    });
+
+    socket.on("send_message", (data) => {
+        socket.to(data.room).emit("receive_message", data);
+    });
+
+    socket.on("disconnect", () => {
+        // console.log("User Disconnected", socket.id);
+    });
+});
 
 server.listen(4000, () => {
     console.log("SERVER RUNNING AT 4000 PORT");
