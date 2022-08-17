@@ -2,6 +2,7 @@ const app = require("./src/app");
 const http = require("http");
 const server = http.createServer(app);
 const cors = require("cors");
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
@@ -30,6 +31,6 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(4000, () => {
+server.listen(PORT, () => {
     console.log("SERVER RUNNING AT 4000 PORT");
 });
