@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3001",
+        origin: "https://live-chat-socket-io-client.vercel.app/",
         methods: ["GET", "POST"]
     }
 });
@@ -31,6 +31,6 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(5002, () => {
-    console.log("SERVER RUNNING AT 5002 PORT");
+server.listen(4000, () => {
+    console.log("SERVER RUNNING AT 4000 PORT");
 });
